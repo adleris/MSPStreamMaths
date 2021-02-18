@@ -1,7 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-if __name__ == "__main__":
+# I have no idea why this import doesnt't work but figure this out and the script will work
+from MSPStreamMaths.StreamMaths import StreamMaths
+
+def test_symbolic():
+    sm = StreamMaths(lpf_smoothing=10, lpf_avg_length=3)
+    
     START=0
     END  =10
     NUM  =100
@@ -17,11 +22,11 @@ if __name__ == "__main__":
         # numerically compute the derivative of the function + noise
         noise = (np.random.rand() - 0.5)/10
         #noise = 0
-        numerical.append(derivative(f(t_i) + noise, ts))
+        numerical.append(sm.derivative(f(t_i) + noise, ts))
         
         # LPF the numerical derivative
-        lpf_smooth_list.append(lpf_smoothing(numerical[-1], 10))
-        lpf_moving_avg_list.append(lpf_moving_avg(numerical[-1], 3))
+        lpf_smooth_list.append(sm.lpf_smooth(numerical[-1]))
+        lpf_moving_avg_list.append(sm.lpf_moving_avg(numerical[-1]))
 
 
     # visualise some plots
@@ -42,6 +47,5 @@ if __name__ == "__main__":
     plt.show()
 
 
-    #x,y,z
-    #v = derivative((x**2+y**2+z**2)**(1/3), ts)
-    #w = derivative(theta, ts)
+if __name__ == "__main__":
+    test_symbolic()

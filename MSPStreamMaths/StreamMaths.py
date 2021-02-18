@@ -1,6 +1,6 @@
 from collections import deque
 
-class StreamMathsClass():
+class StreamMaths():
     def __init__(self, lpf_smoothing=None, lpf_avg_length=None):
         """
         # Moving Average
