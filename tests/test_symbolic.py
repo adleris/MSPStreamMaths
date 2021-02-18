@@ -4,6 +4,19 @@ import numpy as np
 # I have no idea why this import doesnt't work but figure this out and the script will work
 from MSPStreamMaths.StreamMaths import StreamMaths
 
+def f(x):
+    """
+    symbolic function under examination
+    """
+    return x*np.sin(x)
+    
+def dfdx(x):
+    """
+    symbolic derivative of function under examination, to also be computed numerically
+    """
+    return x*np.cos(x) + np.sin(x)
+
+
 def test_symbolic():
     sm = StreamMaths(lpf_smoothing=10, lpf_avg_length=3)
     
