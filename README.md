@@ -47,18 +47,18 @@ y_out = []
 T_out = []
 
 # in the update loop
-        global dxdt
-        global dydt
-        global dTdt
-        dxdt.append(sm_x.derivative(x_new, 0.1))
-        dydt.append(sm_y.derivative(y_new, 0.1))
-        dTdt.append(sm_T.derivative(theta_new, 0.1))
-        global x_out
-        global y_out
-        global z_out
-        x_out.append(x_new)
-        y_out.append(y_new)
-        T_out.append(theta_new)
+global dxdt
+global dydt
+global dTdt
+dxdt.append(sm_x.derivative(x_new, 0.1))
+dydt.append(sm_y.derivative(y_new, 0.1))
+dTdt.append(sm_T.derivative(theta_new, 0.1))
+global x_out
+global y_out
+global z_out
+x_out.append(x_new)
+y_out.append(y_new)
+T_out.append(theta_new)
 
 # at the end
 print('ddt={\'x\':', dxdt, ',\'y\':', dydt, ',\'theta\':', dTdt, '}')

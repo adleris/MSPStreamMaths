@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="MSPStreamMaths",
-    version="0.1.0",
+    version="0.1.1",
     author="Alexander Leris",
     author_email="aleris@melbournespaceprogram.com",
-    description="A small package to process data streams",
+    description="A small package to process data streams for MSP",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/adleris/streammaths",
