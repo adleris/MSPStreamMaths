@@ -1,8 +1,9 @@
+# Stream Maths
 This package contains functions to process an input stream and take it's 
 derivative. Computing the derivative numerically is sensitive to noise, so two 
 low-pass filters are implemented to remove some of that noise
 
-## Usage
+# Usage
 As each new data point comes in, call derivative() on the data point and then
 one of the low pass filters on the derivative. A publisher-subscriber model of
 this could look like:
@@ -20,22 +21,25 @@ and then import into your python scrips with
 
 
 ## IMPORTANT NOTE
-use a different instanceof `streamClass()` for each variable you're tracking!
+Use a different instanceof `streamClass()` for each variable you're tracking!
 The classes keep internal memory of the past inputs so you don't have to worry
 about passing data around, but it means trying to use multiple will make the
 numbers collide.
 
 
-## Testing
+# Building
+Run `python setup.py bdist_wheel`, which will put the executable into dists/. You can then use that .whl file in a `pip install` statement as described in usage.
 
-# test_symbolic
+# Testing
+
+## test_symbolic
 Take the derivative of a symbolic expression (sepcified in `f(x)`) and compare its
 numerical and symbolic derivates.
 
 When you're trying to test things with the test_symbolic.py script, if you change
 the START, END, or NUM, you might have to change the noise value as well.
 
-# test_graph
+## test_graph
 Works with FastSLAM data and creates a graphical reporesentation of the data
 
 If you run fastslam and use the test_graph.py test script, paste in the values of
