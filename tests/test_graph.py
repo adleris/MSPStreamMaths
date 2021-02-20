@@ -73,4 +73,14 @@ def import_dicts(fname):
         contents = f.read().split("fs2_out=")
         ddt = ast.literal_eval(contents[0].replace("ddt=",""))
         fs2_out = ast.literal_eval(contents[1])
+    
+    # to account for the newly written bearing derivative calculator, let's
+    # take the derivative of the actual bearing stream with the new and 
+    # improved version
+    import_sm = StreamMaths()
+    new_out = []
+    for datum in fs2_out['theta']:
+        if datum == -1.651277367294096: datum = -2.88520079892029 - 0.03        # override the single weird data point that doesn't fit any trends
+        new_out.append(import_sm.derivative_bearing(datum, 0.1))
+    ddt['theta'] = new_out
     return ddt, fs2_out

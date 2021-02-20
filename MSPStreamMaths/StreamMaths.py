@@ -14,6 +14,7 @@ class StreamMaths():
         data, but also increases lag.
         """
         self.ddx_prev_in = 0
+        self.ddx_prev_result = 0
 
         # smoothing
         self.lpf_smoothing_prev = None              # previous data
@@ -32,6 +33,33 @@ class StreamMaths():
         """
         dydt = (next_in - self.ddx_prev_in) / timestep
         self.ddx_prev_in = next_in
+        return dydt
+
+    def derivative_bearing(self, next_in, timestep):
+        """
+        take the derivative of a bearing input stream of numbers.
+        Takes into account the loop around from pi to -pi.
+        @param next_in next number of the input stream
+        @param timestep time since last input.
+        """
+        MAX_TURN = 2 # radians: The maximum turn we're assuming can happen per timestep
+        PI = 3.1415926535
+        dydt = (next_in - self.ddx_prev_in) / timestep
+        if abs(abs(dydt) - abs(self.ddx_prev_result)) > MAX_TURN:                 # we've had a jump in the derivative
+
+            # recompute derivative but subtract 2pi: clockwise motion and crossed the x-axis
+            dydt = (next_in - self.ddx_prev_in - 2*PI) / timestep
+            if abs(abs(dydt) - abs(self.ddx_prev_result)) > MAX_TURN:
+            
+                # recompute derivative but add 2pi: anticlockwise motion and crossed the x-axis
+                dydt = (next_in - self.ddx_prev_in + 2*PI) / timestep
+                # if abs(abs(dydt) - abs(self.ddx_prev_result)) > MAX_TURN:
+                    # at this point we haven't found anything, I don't think we should reach this point?
+
+        # whatever value we had for dydt here, it should work!
+
+        self.ddx_prev_in = next_in
+        self.ddx_prev_result = dydt
         return dydt
 
     def lpf_smooth(self, next_in):
