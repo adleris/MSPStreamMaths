@@ -8,14 +8,8 @@ from MSPStreamMaths.StreamMaths import StreamMaths
 
 def test_graph_all():
 
-    # read in data, messy, but does the job:
-    with open("tests/fs_data.txt", "r") as f:
-        # breaks up the input file into 2 dictionaries and replaces the assignment operator
-        contents = f.read().split("fs2_out=")
-        ddt = ast.literal_eval(contents[0].replace("ddt=",""))
-        fs2_out = ast.literal_eval(contents[1])
+    ddt, fs2_out = import_dicts("tests/fs_data.txt")
         
-
     sm = StreamMaths(lpf_avg_length=3, lpf_smoothing=3)
     avg = {'x':[], 'y':[], 'theta':[]}
     smooth = {'x':[], 'y':[], 'theta':[]}
@@ -69,3 +63,14 @@ def test_graph_all():
 
     plt.show()
 
+def import_dicts(fname):
+    """
+    read in data from the data file, and pull out the dictionaries
+    """
+    # messy, but does the job
+    with open(fname, "r") as f:
+        # breaks up the input file into 2 dictionaries and replaces the assignment operator
+        contents = f.read().split("fs2_out=")
+        ddt = ast.literal_eval(contents[0].replace("ddt=",""))
+        fs2_out = ast.literal_eval(contents[1])
+    return ddt, fs2_out
