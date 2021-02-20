@@ -1,7 +1,7 @@
 from collections import deque
 
 class StreamMaths():
-    def __init__(self, lpf_smoothing=None, lpf_avg_length=None):
+    def __init__(self, lpf_smoothing=None, lpf_avg_length=None, max_turn=2):
         """
         # Moving Average
         Take the moving average over the data stream. A greater length has a
@@ -12,7 +12,18 @@ class StreamMaths():
         Smooth the incoming data stream. Smoothing of 1 makes no change to
         incoming data. increased smoothing value has a greater effect on the
         data, but also increases lag.
+
+        # Arguments
+        max_turn: The maximum turn we're assuming can happen per timestep 
+                  (in radians), used for derivative_bearing.
+        lpf_smoothing: smoothing parameter used for lpf_smooth.
+                  1 means no smoothing, larger values mean more smoothing
+        lpf_avg_length: The length to maintain the moving averagfe over for
+                  lpf_moving_avg.
         """
+        self.PI = 3.1415926535
+        self.MAX_TURN = max_turn
+
         self.ddx_prev_in = 0
         self.ddx_prev_result = 0
 
@@ -42,10 +53,8 @@ class StreamMaths():
         @param next_in next number of the input stream
         @param timestep time since last input.
         """
-        MAX_TURN = 2 # radians: The maximum turn we're assuming can happen per timestep
-        PI = 3.1415926535
         dydt = (next_in - self.ddx_prev_in) / timestep
-        if abs(abs(dydt) - abs(self.ddx_prev_result)) > MAX_TURN:                 # we've had a jump in the derivative
+        if abs(abs(dydt) - abs(self.ddx_prev_result)) > MAX_TURN:      # we've had a jump in the derivative
 
             # recompute derivative but subtract 2pi: clockwise motion and crossed the x-axis
             dydt = (next_in - self.ddx_prev_in - 2*PI) / timestep
