@@ -2,6 +2,8 @@
 .vscode
 venv
 __pycache__
-dist/
+dist/*
+# allow the latest distribution, have to hcange on each release
+!dist/MSPStreamMaths-0.2.0-py3-none-any.whl
 build/
 MSPStreamMaths.egg-info/

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="MSPStreamMaths",
-    version="0.1.2",
+    version="0.2.0",
     author="Alexander Leris",
     author_email="aleris@melbournespaceprogram.com",
     description="A small package to process data streams for MSP",

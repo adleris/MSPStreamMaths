@@ -29,6 +29,7 @@ numbers collide.
 
 # Building
 Run `python setup.py bdist_wheel`, which will put the executable into dists/. You can then use that .whl file in a `pip install` statement as described in usage.
+The most recent distribution is in dists/, but this isn't the best way to do this.
 
 # Testing
 
