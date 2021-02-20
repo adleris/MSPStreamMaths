@@ -9,10 +9,13 @@ one of the low pass filters on the derivative. A publisher-subscriber model of
 this could look like:
 
 def update(val, timestep):
-    return lpf_smoothing(derivative(val, timestep), 10)
+    return StreamMaths.lpf_smoothing(StreamMaths.derivative(val, timestep), 10)
 
 Of the two LPFs, I think the smoothing one works best, but they're both subject
 to tuning of the smoothing/length variable.
+
+For processing bearing data, use the `derivative_bearing` function which handles
+the wrap-arounds from pi to -pi that FastSLAM outputs.
 
 Import the package into your python virtual environment as follows:
 `pip install distfile.whl`
